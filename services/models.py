@@ -15,3 +15,7 @@ class MainPage(models.Model):
 
     def __str__(self):
         return "Главная страница"
+
+
+class Service(models.Model):
+    pass

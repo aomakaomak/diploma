@@ -1,10 +1,327 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-  ГЛАВНАЯ
-</body>
-</html>
+{% extends 'services/base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+
+<!-- Hero / краткое описание компании -->
+<section class="py-5"
+         style="background-image: url('/static/images/hero-diagnostics.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="container">
+        <div class="p-4 p-lg-5 rounded-3 bg-white bg-opacity-75">
+            <div class="row align-items-center gy-4">
+                <div class="col-lg-6">
+                    <h1 class="display-5 fw-bold mb-3">
+                        {{ main_page.header_1 }}
+                    </h1>
+                    <p class="lead mb-4">
+                        {{ main_page.header_2 }}
+                    </p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="#services" class="btn btn-primary btn-lg">
+                            {{ main_page.button_text_1 }}
+                        </a>
+                        <a href="#feedback" class="btn btn-outline-primary btn-lg">
+                            {{ main_page.button_text_2 }}
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">Почему выбирают нас</h5>
+                            <ul class="mb-0">
+                                {% for line in main_page.benefits.splitlines %}
+                                    {% if line %}
+                                        <li>{{ line }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- О компании -->
+<section id="about" class="py-5">
+    <div class="container">
+        <div class="row gy-4">
+            <div class="col-lg-6">
+                <h2 class="h3 mb-3">О компании</h2>
+                <p>
+                    {{ main_page.about_company }}
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <h3 class="h5 mb-3">{{ main_page.short_about_us_header }}</h3>
+                <div class="row gy-3">
+                    <div class="col-sm-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="h6">Команда</h4>
+                                <p class="mb-0">
+                                    {{ main_page.short_about_us_1 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="h6">Оборудование</h4>
+                                <p class="mb-0">
+                                    {{ main_page.short_about_us_2 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="h6">Удобство</h4>
+                                <p class="mb-0">
+                                    {{ main_page.short_about_us_3 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="h6">Подход</h4>
+                                <p class="mb-0">
+                                    {{ main_page.short_about_us_4 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Услуги -->
+<section id="services" class="py-5 bg-light">
+    <div class="container">
+        <div class="mb-4 text-center">
+            <h2 class="h3 mb-2">Наши услуги</h2>
+            <p class="text-muted mb-0">
+                Основные направления диагностики в нашем центре.
+            </p>
+        </div>
+
+        <div class="row gy-4">
+            <!-- Услуга 1 -->
+            <div class="col-12">
+                <div class="card">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <div class="ratio ratio-4x3 rounded-start overflow-hidden">
+                                <img
+                                    src="/static/images/service-lab.jpg"
+                                    class="w-100 h-100"
+                                    style="object-fit: cover;"
+                                    alt="Лабораторная диагностика"
+                                >
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body d-flex flex-column h-100">
+                                <h3 class="h5">Лабораторная диагностика</h3>
+                                <p class="mb-2">
+                                    Общеклинические, биохимические и иммунологические анализы.
+                                </p>
+                                <p class="text-muted mb-4">
+                                    Пример: общий анализ крови, биохимия, гормональные исследования.
+                                </p>
+
+                                <div class="mt-auto d-flex align-items-center justify-content-between gap-3">
+                                    <span class="text-primary fw-semibold">от 500 ₽</span>
+                                    <a href="#" class="btn btn-outline-primary btn-sm">
+                                        Подробнее
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Услуга 2 -->
+            <div class="col-12">
+                <div class="card">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <div class="ratio ratio-4x3 rounded-start overflow-hidden">
+                                <img
+                                    src="/static/images/service-ultrasound.jpg"
+                                    class="w-100 h-100"
+                                    style="object-fit: cover;"
+                                    alt="УЗИ-исследования"
+                                >
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body d-flex flex-column h-100">
+                                <h3 class="h5">УЗИ-исследования</h3>
+                                <p class="mb-2">
+                                    Ультразвуковая диагностика органов брюшной полости, щитовидной железы и др.
+                                </p>
+                                <p class="text-muted mb-4">
+                                    Пример: УЗИ органов брюшной полости, УЗИ сердца, УЗИ сосудов.
+                                </p>
+
+                                <div class="mt-auto d-flex align-items-center justify-content-between gap-3">
+                                    <span class="text-primary fw-semibold">от 1 200 ₽</span>
+                                    <a href="#" class="btn btn-outline-primary btn-sm">
+                                        Подробнее
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Услуга 3 -->
+            <div class="col-12">
+                <div class="card">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <div class="ratio ratio-4x3 rounded-start overflow-hidden">
+                                <img
+                                    src="/static/images/service-mri-ct.jpg"
+                                    class="w-100 h-100"
+                                    style="object-fit: cover;"
+                                    alt="МРТ и КТ"
+                                >
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body d-flex flex-column h-100">
+                                <h3 class="h5">МРТ и КТ</h3>
+                                <p class="mb-2">
+                                    Высокоточная томографическая диагностика различных органов и систем.
+                                </p>
+                                <p class="text-muted mb-4">
+                                    Пример: МРТ головного мозга, КТ органов грудной клетки.
+                                </p>
+
+                                <div class="mt-auto d-flex align-items-center justify-content-between gap-3">
+                                    <span class="text-primary fw-semibold">от 4 500 ₽</span>
+                                    <a href="#" class="btn btn-outline-primary btn-sm">
+                                        Подробнее
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Кнопка "Все услуги" — потом можно сделать ссылкой на страницу /services/ -->
+        <div class="text-center mt-4">
+            <a href="#" class="btn btn-outline-primary">
+                Смотреть все услуги
+            </a>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Контакты + форма обратной связи -->
+<section id="contacts" class="py-5">
+    <div class="container">
+        <div class="row gy-5">
+            <div class="col-lg-5">
+                <h2 class="h3 mb-3">Контакты</h2>
+                <p>
+                    Вы можете записаться на приём по телефону, через форму обратной связи
+                    или в личном кабинете на сайте.
+                </p>
+
+                <div class="mb-3">
+                    <h3 class="h6 mb-1">Адрес</h3>
+                    <p class="mb-0">
+                        г. Москва, ул. Примерная, д. 10
+                    </p>
+                </div>
+
+                <div class="mb-3">
+                    <h3 class="h6 mb-1">Телефон</h3>
+                    <p class="mb-0">
+                        +7 (495) 000-00-00
+                    </p>
+                </div>
+
+                <div class="mb-3">
+                    <h3 class="h6 mb-1">Email</h3>
+                    <p class="mb-0">
+                        info@diagnostik-plus.ru
+                    </p>
+                </div>
+
+                <div class="mb-3">
+                    <h3 class="h6 mb-1">Режим работы</h3>
+                    <p class="mb-0">
+                        Пн–Вс: 8:00–21:00
+                    </p>
+                </div>
+
+                <!-- Заглушка под карту (потом можно вставить iframe с картой) -->
+                <div class="mt-4">
+                    <div class="border rounded-3 p-4 text-center text-muted">
+                        Здесь может быть карта проезда
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7" id="feedback">
+                <h2 class="h3 mb-3">Форма для обратной связи</h2>
+                <p class="mb-4">
+                    Оставьте свои контакты и краткое описание вопроса — мы свяжемся с вами
+                    для уточнения деталей и записи на удобное время.
+                </p>
+
+                <!-- Форма для Django: метод POST, csrf_token и т.д. -->
+                <form method="post" action="#">
+                    <!-- {% csrf_token %} -->
+                    <div class="mb-3">
+                        <label for="id_name" class="form-label">Имя</label>
+                        <input type="text" class="form-control" id="id_name" name="name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_phone" class="form-label">Телефон</label>
+                        <input type="tel" class="form-control" id="id_phone" name="phone" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="id_email" name="email">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_message" class="form-label">Сообщение</label>
+                        <textarea class="form-control" id="id_message" name="message" rows="4" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Отправить
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
