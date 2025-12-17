@@ -40,6 +40,12 @@ class DoctorListView(ListView):
     context_object_name = "doctors"
 
 
+class ServicesListView(ListView):
+    model = Service
+    template_name = "services/services.html"
+    context_object_name = "services"
+
+
 
 # class MainPageView(TemplateView):
 #     template_name = 'services/home.html'

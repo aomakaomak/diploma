@@ -1,7 +1,7 @@
 from django.urls import path
 
 
-from .views import HomeView, ServiceCreateView, ServiceDetailView, DoctorListView
+from .views import HomeView, ServiceCreateView, ServiceDetailView, DoctorListView, ServicesListView
 
 app_name = 'services'
 
@@ -10,6 +10,7 @@ urlpatterns = [
     path('new/', ServiceCreateView.as_view(), name='service_create'),
     path('service_detail/<int:pk>/', ServiceDetailView.as_view(), name='service_detail'),
     path('about/', DoctorListView.as_view(), name='about'),
+    path('services/', ServicesListView.as_view(), name='services_list'),
 
 ]
 
