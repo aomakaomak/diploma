@@ -24,7 +24,7 @@ class MainPage(models.Model):
 
 class Service(models.Model):
     title = models.CharField(max_length=150, verbose_name="Название услуги")
-    short_description = models.CharField(max_length=1000, verbose_name="Название услуги")
+    short_description = models.CharField(max_length=1000, verbose_name="Краткое описание")
     example = models.CharField(max_length=1000, verbose_name="Пример услуги")
     full_description = models.TextField(verbose_name="Полное описание")
     price = models.IntegerField(verbose_name="Цена")

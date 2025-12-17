@@ -107,6 +107,8 @@
 </section>
 
 
+{% load static %}
+
 <!-- Услуги -->
 <section id="services" class="py-5 bg-light">
     <div class="container">
@@ -118,123 +120,90 @@
         </div>
 
         <div class="row gy-4">
-            <!-- Услуга 1 -->
-            <div class="col-12">
-                <div class="card">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <div class="ratio ratio-4x3 rounded-start overflow-hidden">
-                                <img
-                                    src="/static/images/service-lab.jpg"
-                                    class="w-100 h-100"
-                                    style="object-fit: cover;"
-                                    alt="Лабораторная диагностика"
-                                >
+            {% for service in services %}
+                <div class="col-12">
+                    <div class="card">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <div class="ratio ratio-4x3 rounded-start overflow-hidden">
+                                    {% if service.image %}
+                                        <img
+                                            src="{{ service.image.url }}"
+                                            class="w-100 h-100"
+                                            style="object-fit: cover;"
+                                            alt="{{ service.title }}"
+                                        >
+                                    {% else %}
+                                        <img
+                                            src="{% static 'images/service-default.jpg' %}"
+                                            class="w-100 h-100"
+                                            style="object-fit: cover;"
+                                            alt="{{ service.title }}"
+                                        >
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body d-flex flex-column h-100">
-                                <h3 class="h5">Лабораторная диагностика</h3>
-                                <p class="mb-2">
-                                    Общеклинические, биохимические и иммунологические анализы.
-                                </p>
-                                <p class="text-muted mb-4">
-                                    Пример: общий анализ крови, биохимия, гормональные исследования.
-                                </p>
 
-                                <div class="mt-auto d-flex align-items-center justify-content-between gap-3">
-                                    <span class="text-primary fw-semibold">от 500 ₽</span>
-                                    <a href="#" class="btn btn-outline-primary btn-sm">
-                                        Подробнее
-                                    </a>
+                            <div class="col-md-8">
+                                <div class="card-body d-flex flex-column h-100">
+                                    <h3 class="h5">{{ service.title }}</h3>
+
+                                    <p class="mb-2">
+                                        {{ service.short_description }}
+                                    </p>
+
+                                    <p class="text-muted mb-3">
+                                        Пример: {{ service.example }}
+                                    </p>
+
+                                    <div class="collapse" id="serviceDesc{{ service.id }}">
+                                        <div class="mb-3">
+                                            {{ service.full_description|linebreaksbr }}
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-auto d-flex align-items-center justify-content-between gap-3">
+                                        <span class="text-primary fw-semibold">от {{ service.price }} ₽</span>
+
+                                        <div class="d-flex gap-2">
+                                            <button
+                                                class="btn btn-outline-primary btn-sm"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#serviceDesc{{ service.id }}"
+                                                aria-expanded="false"
+                                                aria-controls="serviceDesc{{ service.id }}"
+                                            >
+                                                Подробнее
+                                            </button>
+
+                                            <a href="#feedback" class="btn btn-primary btn-sm">
+                                                Записаться
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Услуга 2 -->
-            <div class="col-12">
-                <div class="card">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <div class="ratio ratio-4x3 rounded-start overflow-hidden">
-                                <img
-                                    src="/static/images/service-ultrasound.jpg"
-                                    class="w-100 h-100"
-                                    style="object-fit: cover;"
-                                    alt="УЗИ-исследования"
-                                >
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body d-flex flex-column h-100">
-                                <h3 class="h5">УЗИ-исследования</h3>
-                                <p class="mb-2">
-                                    Ультразвуковая диагностика органов брюшной полости, щитовидной железы и др.
-                                </p>
-                                <p class="text-muted mb-4">
-                                    Пример: УЗИ органов брюшной полости, УЗИ сердца, УЗИ сосудов.
-                                </p>
-
-                                <div class="mt-auto d-flex align-items-center justify-content-between gap-3">
-                                    <span class="text-primary fw-semibold">от 1 200 ₽</span>
-                                    <a href="#" class="btn btn-outline-primary btn-sm">
-                                        Подробнее
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-secondary mb-0 text-center">
+                        Услуги пока не добавлены.
                     </div>
                 </div>
-            </div>
-
-            <!-- Услуга 3 -->
-            <div class="col-12">
-                <div class="card">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <div class="ratio ratio-4x3 rounded-start overflow-hidden">
-                                <img
-                                    src="/static/images/service-mri-ct.jpg"
-                                    class="w-100 h-100"
-                                    style="object-fit: cover;"
-                                    alt="МРТ и КТ"
-                                >
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body d-flex flex-column h-100">
-                                <h3 class="h5">МРТ и КТ</h3>
-                                <p class="mb-2">
-                                    Высокоточная томографическая диагностика различных органов и систем.
-                                </p>
-                                <p class="text-muted mb-4">
-                                    Пример: МРТ головного мозга, КТ органов грудной клетки.
-                                </p>
-
-                                <div class="mt-auto d-flex align-items-center justify-content-between gap-3">
-                                    <span class="text-primary fw-semibold">от 4 500 ₽</span>
-                                    <a href="#" class="btn btn-outline-primary btn-sm">
-                                        Подробнее
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
 
-        <!-- Кнопка "Все услуги" — потом можно сделать ссылкой на страницу /services/ -->
         <div class="text-center mt-4">
-            <a href="#" class="btn btn-outline-primary">
+            <a href="#services" class="btn btn-outline-primary">
                 Смотреть все услуги
             </a>
         </div>
     </div>
 </section>
+
 
 
 
