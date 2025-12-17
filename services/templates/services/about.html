@@ -1,0 +1,165 @@
+{% extends 'services/base.html' %}
+{% load static %}
+
+{% block title %}О компании{% endblock %}
+
+{% block content %}
+
+<!-- Заголовок страницы -->
+<header class="py-5 bg-light border-bottom">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-2">О компании</h1>
+        <p class="lead mb-0 text-muted">
+            История, миссия, ценности и команда врачей медцентра «Диагностик+».
+        </p>
+    </div>
+</header>
+
+<!-- История компании -->
+<section class="py-5">
+    <div class="container">
+        <div class="row gy-4 align-items-start">
+            <div class="col-lg-6">
+                <h2 class="h3 mb-3">История компании</h2>
+                <p class="mb-3">
+                    Медцентр «Диагностик+» начинался как небольшой кабинет диагностики, а сегодня это
+                    современный центр с командой специалистов и понятным сервисом для пациентов.
+                </p>
+                <p class="mb-0">
+                    Мы развиваемся, обновляем оборудование, расширяем направления и делаем акцент на том,
+                    чтобы пациенту было удобно: запись, результаты, консультации — всё прозрачно и без лишней суеты.
+                </p>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="h5 mb-3">Ключевые этапы</h3>
+
+                        <div class="mb-3">
+                            <div class="fw-semibold">2018</div>
+                            <div class="text-muted">Открытие первого кабинета и запуск базовых услуг.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="fw-semibold">2020</div>
+                            <div class="text-muted">Расширение диагностики и внедрение стандартов качества.</div>
+                        </div>
+
+                        <div class="mb-0">
+                            <div class="fw-semibold">2023–2025</div>
+                            <div class="text-muted">Рост команды врачей, обновление оборудования, развитие сервиса.</div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Миссия и ценности -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row gy-4">
+            <div class="col-lg-5">
+                <h2 class="h3 mb-3">Миссия</h2>
+                <p class="mb-0">
+                    Делать диагностику и медицинскую помощь понятной, доступной и точной — с уважением к времени пациента,
+                    вниманием к деталям и высоким стандартом качества.
+                </p>
+            </div>
+
+            <div class="col-lg-7">
+                <h2 class="h3 mb-3">Ценности</h2>
+                <div class="row gy-3">
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h3 class="h6 mb-2">Точность</h3>
+                                <p class="mb-0 text-muted">Результаты, которым можно доверять.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h3 class="h6 mb-2">Внимание</h3>
+                                <p class="mb-0 text-muted">Объясняем спокойно, без “медицинского тумана”.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h3 class="h6 mb-2">Ответственность</h3>
+                                <p class="mb-0 text-muted">Соблюдаем стандарты и бережём данные пациента.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h3 class="h6 mb-2">Сервис</h3>
+                                <p class="mb-0 text-muted">Запись, напоминания, результаты — всё удобно.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Команда врачей -->
+<section class="py-5" id="team">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2 mb-4">
+            <div>
+                <h2 class="h3 mb-1">Команда врачей</h2>
+                <p class="text-muted mb-0">Специалисты, которые ведут приём и помогают с диагностикой.</p>
+            </div>
+        </div>
+
+        <div class="row gy-4">
+            {% for doctor in doctors %}
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        {% if doctor.photo %}
+                            <div class="ratio ratio-4x3">
+                                <img src="{{ doctor.photo.url }}"
+                                     class="w-100 h-100"
+                                     style="object-fit: cover;"
+                                     alt="{{ doctor.name }}">
+                            </div>
+                        {% else %}
+                            <div class="ratio ratio-4x3">
+                                <img src="{% static 'images/doctor-default.jpg' %}"
+                                     class="w-100 h-100"
+                                     style="object-fit: cover;"
+                                     alt="{{ doctor.name }}">
+                            </div>
+                        {% endif %}
+
+                        <div class="card-body">
+                            <h3 class="h5 mb-1">{{ doctor.name }}</h3>
+                            <p class="text-muted mb-0">{{ doctor.specialization }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-secondary text-center mb-0">
+                        Врачи пока не добавлены.
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

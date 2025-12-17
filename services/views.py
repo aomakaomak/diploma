@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView
 
 from services.forms import ServiceForm
-from services.models import MainPage, Service
+from services.models import MainPage, Service, Doctor
 
 
 class HomeView(ListView):
@@ -32,6 +32,12 @@ class ServiceDetailView(DetailView):
     model = Service
     template_name = 'services/service_detail.html'
     context_object_name = 'service'
+
+
+class DoctorListView(ListView):
+    model = Doctor
+    template_name = "services/about.html"
+    context_object_name = "doctors"
 
 
 

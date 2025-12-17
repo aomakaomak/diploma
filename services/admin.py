@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from services.models import MainPage, Service
+from services.models import MainPage, Service, Doctor
 
 
 @admin.register(MainPage)
@@ -10,9 +10,11 @@ class MainPageAdmin(admin.ModelAdmin):
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ('title', 'price',)
+    search_fields = ('title',)
 
-# @admin.register(Product)
-# class ProductAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'name', 'category', 'price',)
-#     list_filter = ('category',)
-#     search_fields = ('name', 'description',)
+@admin.register(Doctor)
+class DoctorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'specialization',)
+    list_filter = ('specialization',)
+    search_fields = ('name', 'specialization',)
+

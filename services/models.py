@@ -37,3 +37,17 @@ class Service(models.Model):
         verbose_name = 'услуга'
         verbose_name_plural = 'услуги'
         ordering = ['title']
+
+
+class Doctor(models.Model):
+    name = models.CharField(max_length=150, verbose_name="ФИО")
+    specialization = models.CharField(max_length=150, verbose_name="Специализация")
+    photo = models.ImageField(upload_to='images/', blank=True, null=True, verbose_name="Фото")
+
+    def __str__(self):
+        return f"{self.name} -- {self.specialization}"
+
+    class Meta:
+        verbose_name = 'врач'
+        verbose_name_plural = 'врачи'
+        ordering = ['name']
