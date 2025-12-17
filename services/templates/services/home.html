@@ -207,7 +207,7 @@
 
 
 
-<!-- Контакты + форма обратной связи -->
+<!-- Контакты + карта + форма обратной связи -->
 <section id="contacts" class="py-5">
     <div class="container">
         <div class="row gy-5">
@@ -228,14 +228,14 @@
                 <div class="mb-3">
                     <h3 class="h6 mb-1">Телефон</h3>
                     <p class="mb-0">
-                        +7 (495) 000-00-00
+                        <a href="tel:+74950000000">+7 (495) 000-00-00</a>
                     </p>
                 </div>
 
                 <div class="mb-3">
                     <h3 class="h6 mb-1">Email</h3>
                     <p class="mb-0">
-                        info@diagnostik-plus.ru
+                        <a href="mailto:info@diagnostik-plus.ru">info@diagnostik-plus.ru</a>
                     </p>
                 </div>
 
@@ -246,10 +246,23 @@
                     </p>
                 </div>
 
-                <!-- Заглушка под карту (потом можно вставить iframe с картой) -->
+                <!-- Карта проезда -->
                 <div class="mt-4">
-                    <div class="border rounded-3 p-4 text-center text-muted">
-                        Здесь может быть карта проезда
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="h6 mb-3">Карта проезда</h3>
+                            <div class="ratio ratio-16x9 rounded overflow-hidden">
+                                <iframe
+                                    src="https://yandex.ru/map-widget/v1/?ll=39.723062%2C43.585472&z=14"
+                                    frameborder="0"
+                                    allowfullscreen="true"
+                                    style="border:0;"
+                                ></iframe>
+                            </div>
+                            <div class="text-muted small mt-2">
+                                Если нужен точный адрес — возьми iframe в Яндекс.Картах: «Поделиться» → «Вставить на сайт».
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -257,40 +270,66 @@
             <div class="col-lg-7" id="feedback">
                 <h2 class="h3 mb-3">Форма для обратной связи</h2>
                 <p class="mb-4">
-                    Оставьте свои контакты и краткое описание вопроса — мы свяжемся с вами
-                    для уточнения деталей и записи на удобное время.
+                    Оставьте контакты и кратко опишите вопрос — мы свяжемся с вами.
                 </p>
 
-                <!-- Форма для Django: метод POST, csrf_token и т.д. -->
-                <form method="post" action="#">
-                    <!-- {% csrf_token %} -->
-                    <div class="mb-3">
-                        <label for="id_name" class="form-label">Имя</label>
-                        <input type="text" class="form-control" id="id_name" name="name" required>
-                    </div>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} mb-3" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
 
-                    <div class="mb-3">
-                        <label for="id_phone" class="form-label">Телефон</label>
-                        <input type="tel" class="form-control" id="id_phone" name="phone" required>
-                    </div>
+                <form method="post" action="{% url 'services:home' %}">
+                    {% csrf_token %}
 
-                    <div class="mb-3">
-                        <label for="id_email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="id_email" name="email">
-                    </div>
+                    {{ form.non_field_errors }}
 
-                    <div class="mb-3">
-                        <label for="id_message" class="form-label">Сообщение</label>
-                        <textarea class="form-control" id="id_message" name="message" rows="4" required></textarea>
-                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">{{ form.name.label }}</label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="text-danger small mt-1">{{ form.name.errors }}</div>
+                            {% endif %}
+                        </div>
 
-                    <button type="submit" class="btn btn-primary">
-                        Отправить
-                    </button>
+                        <div class="col-md-4">
+                            <label class="form-label">{{ form.phone.label }}</label>
+                            {{ form.phone }}
+                            {% if form.phone.errors %}
+                                <div class="text-danger small mt-1">{{ form.phone.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">{{ form.email.label }}</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">{{ form.message.label }}</label>
+                            {{ form.message }}
+                            {% if form.message.errors %}
+                                <div class="text-danger small mt-1">{{ form.message.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-12 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">
+                                Отправить
+                            </button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </section>
+
 
 {% endblock %}

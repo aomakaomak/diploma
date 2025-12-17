@@ -1,22 +1,65 @@
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, FormView
+from django.views.generic.edit import FormMixin
 
 from services.forms import ServiceForm, FeedbackForm
 from services.models import MainPage, Service, Doctor
 
 
-class HomeView(ListView):
+class HomeView(FormMixin, ListView):
     model = Service
     template_name = "services/home.html"
     context_object_name = "services"
 
+    form_class = FeedbackForm
+    success_url = reverse_lazy("services:home")
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["main_page"] = MainPage.objects.first()
+        context["form"] = kwargs.get("form") or self.get_form()
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        form = self.get_form()
+
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            phone = form.cleaned_data.get("phone", "")
+            email = form.cleaned_data["email"]
+            message = form.cleaned_data["message"]
+
+            subject = "Заявка с сайта: форма обратной связи (главная)"
+            body = (
+                f"Имя: {name}\n"
+                f"Телефон: {phone}\n"
+                f"Email: {email}\n\n"
+                f"Сообщение:\n{message}\n"
+            )
+
+            try:
+                send_mail(
+                    subject=subject,
+                    message=body,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[settings.EMAIL_HOST_USER],
+                    fail_silently=False,
+                )
+            except Exception as e:
+                messages.error(request, f"Не удалось отправить письмо: {e}")
+                context = self.get_context_data(form=form)
+                return self.render_to_response(context)
+
+            messages.success(request, "Спасибо! Сообщение отправлено. Мы свяжемся с вами в ближайшее время.")
+            return redirect(f"{self.get_success_url()}#feedback")
+
+        context = self.get_context_data(form=form)
+        return self.render_to_response(context)
 
 
 class ServiceCreateView(CreateView):
