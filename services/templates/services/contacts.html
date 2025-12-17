@@ -1,0 +1,149 @@
+{% extends 'services/base.html' %}
+
+{% block title %}Контакты{% endblock %}
+
+{% block content %}
+
+<header class="py-5 bg-light border-bottom">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-2">Контакты</h1>
+        <p class="lead mb-0 text-muted">
+            Адрес, схема проезда, телефоны и форма обратной связи.
+        </p>
+    </div>
+</header>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row gy-4">
+
+            <!-- Контактная информация -->
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h2 class="h4 mb-3">Наши контакты</h2>
+
+                        <div class="mb-3">
+                            <div class="fw-semibold">Адрес</div>
+                            <div class="text-muted">
+                                г. Сочи, ул. Примерная, 10 (вход со двора)
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="fw-semibold">Телефоны</div>
+                            <div class="text-muted">
+                                <div><a href="tel:+79990000000">+7 (999) 000-00-00</a></div>
+                                <div><a href="tel:+78880000000">+7 (888) 000-00-00</a></div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="fw-semibold">Email</div>
+                            <div class="text-muted">
+                                <a href="mailto:info@diagnostik-plus.ru">info@diagnostik-plus.ru</a>
+                            </div>
+                        </div>
+
+                        <div class="mb-0">
+                            <div class="fw-semibold">Режим работы</div>
+                            <div class="text-muted">
+                                Пн–Пт: 08:00–20:00<br>
+                                Сб–Вс: 09:00–18:00
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карта -->
+            <div class="col-lg-7">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h2 class="h4 mb-3">Карта проезда</h2>
+
+                        <div class="ratio ratio-16x9 rounded overflow-hidden">
+                            <iframe
+                                src="https://yandex.ru/map-widget/v1/?ll=39.723062%2C43.585472&z=14"
+                                frameborder="0"
+                                allowfullscreen="true"
+                                style="border:0;"
+                            ></iframe>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Форма обратной связи -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h2 class="h4 mb-3">Форма обратной связи</h2>
+
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-success mb-3" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <form method="post">
+                            {% csrf_token %}
+
+                            {{ form.non_field_errors }}
+
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">{{ form.name.label }}</label>
+                                    {{ form.name }}
+                                    {% if form.name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.name.errors }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label">{{ form.phone.label }}</label>
+                                    {{ form.phone }}
+                                    {% if form.phone.errors %}
+                                        <div class="text-danger small mt-1">{{ form.phone.errors }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label">{{ form.email.label }}</label>
+                                    {{ form.email }}
+                                    {% if form.email.errors %}
+                                        <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label">{{ form.message.label }}</label>
+                                    {{ form.message }}
+                                    {% if form.message.errors %}
+                                        <div class="text-danger small mt-1">{{ form.message.errors }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-12 d-flex justify-content-end gap-2">
+                                    <button type="submit" class="btn btn-primary">
+                                        Отправить
+                                    </button>
+                                    <a href="{% url 'services:home' %}" class="btn btn-outline-secondary">
+                                        На главную
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

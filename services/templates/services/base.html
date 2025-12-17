@@ -13,7 +13,7 @@
 <!-- Навигация -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Медцентр «Диагностик+»</a>
+        <a class="navbar-brand" href="{% url 'services:home' %}">Медцентр «Диагностик+»</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
                 aria-controls="mainNavbar" aria-expanded="false" aria-label="Переключить меню">
             <span class="navbar-toggler-icon"></span>
@@ -22,13 +22,13 @@
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#about">О компании</a>
+                    <a class="nav-link" href="{% url 'services:about' %}">О компании</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#services">Услуги</a>
+                    <a class="nav-link" href="{% url 'services:services_list' %}">Услуги</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#contacts">Контакты</a>
+                    <a class="nav-link" href="{% url 'services:contacts' %}">Контакты</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#feedback">Обратная связь</a>
