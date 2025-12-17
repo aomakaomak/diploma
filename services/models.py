@@ -51,3 +51,55 @@ class Doctor(models.Model):
         verbose_name = 'врач'
         verbose_name_plural = 'врачи'
         ordering = ['name']
+
+
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.db import models
+from django.db.models import Q
+
+
+class Appointment(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="appointments",
+        verbose_name="Пользователь",
+    )
+
+    service = models.ForeignKey(
+        "services.Service",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="appointments",
+        verbose_name="Услуга",
+    )
+
+    doctor = models.ForeignKey(
+        "services.Doctor",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="appointments",
+        verbose_name="Врач",
+    )
+
+    result = models.TextField(verbose_name="Результат", blank=True, null=True)
+
+    def clean(self):
+        super().clean()
+        if (self.service is None and self.doctor is None) or (self.service is not None and self.doctor is not None):
+            raise ValidationError("Запись должна быть либо на услугу, либо к врачу (только один вариант).")
+
+    def __str__(self):
+        if self.service_id:
+            return f"{self.user} — {self.service}"
+        if self.doctor_id:
+            return f"{self.user} — {self.doctor}"
+        return f"{self.user} — (не выбрано)"
+
+    class Meta:
+        verbose_name = "запись"
+        verbose_name_plural = "записи"
+

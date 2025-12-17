@@ -1,12 +1,19 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import Service
+from .models import Service, Appointment
+
 
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service
         fields = "__all__"
+
+
+class AppointmentForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        exclude = ("result",)
 
 
 class FeedbackForm(forms.Form):

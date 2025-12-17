@@ -6,8 +6,8 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 
-from services.forms import ServiceForm, FeedbackForm
-from services.models import MainPage, Service, Doctor
+from services.forms import ServiceForm, FeedbackForm, AppointmentForm
+from services.models import MainPage, Service, Doctor, Appointment
 
 
 class HomeView(FormMixin, ListView):
@@ -125,3 +125,10 @@ class ContactsView(FormView):
 
         messages.success(self.request, "Спасибо! Сообщение отправлено. Мы свяжемся с вами в ближайшее время.")
         return super().form_valid(form)
+
+
+class AppointmentCreateView(CreateView):
+    model = Appointment
+    form_class = AppointmentForm
+    template_name = 'services/appointment_form.html'
+    success_url = reverse_lazy('services:home')

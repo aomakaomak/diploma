@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from services.models import MainPage, Service, Doctor
+from services.models import MainPage, Service, Doctor, Appointment
 
 
 @admin.register(MainPage)
@@ -17,4 +17,9 @@ class DoctorAdmin(admin.ModelAdmin):
     list_display = ('name', 'specialization',)
     list_filter = ('specialization',)
     search_fields = ('name', 'specialization',)
+
+
+@admin.register(Appointment)
+class AppointmentAdmin(admin.ModelAdmin):
+    list_display = ("id", "user", "service", "doctor")
 
