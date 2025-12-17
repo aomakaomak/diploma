@@ -16,6 +16,24 @@ class MainPage(models.Model):
     def __str__(self):
         return "Главная страница"
 
+    class Meta:
+        verbose_name = 'главная'
+        verbose_name_plural = 'главные'
+        ordering = ['header_1']
+
 
 class Service(models.Model):
-    pass
+    title = models.CharField(max_length=150, verbose_name="Название услуги")
+    short_description = models.CharField(max_length=1000, verbose_name="Название услуги")
+    example = models.CharField(max_length=1000, verbose_name="Пример услуги")
+    full_description = models.TextField(verbose_name="Полное описание")
+    price = models.IntegerField(verbose_name="Цена")
+    image = models.ImageField(upload_to='images/', blank=True, null=True, verbose_name="Фото")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'услуга'
+        verbose_name_plural = 'услуги'
+        ordering = ['title']
