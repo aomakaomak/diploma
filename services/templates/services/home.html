@@ -18,10 +18,10 @@
                         {{ main_page.header_2 }}
                     </p>
                     <div class="d-flex flex-wrap gap-2">
-                        <a href="#services" class="btn btn-primary btn-lg">
+                        <a href="{% url 'services:services_list' %}" class="btn btn-primary btn-lg">
                             {{ main_page.button_text_1 }}
                         </a>
-                        <a href="#feedback" class="btn btn-outline-primary btn-lg">
+                        <a href="{% url 'services:appointment_create' %}" class="btn btn-outline-primary btn-lg">
                             {{ main_page.button_text_2 }}
                         </a>
                     </div>
@@ -166,19 +166,10 @@
                                         <span class="text-primary fw-semibold">от {{ service.price }} ₽</span>
 
                                         <div class="d-flex gap-2">
-                                            <button
-                                                class="btn btn-outline-primary btn-sm"
-                                                type="button"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target="#serviceDesc{{ service.id }}"
-                                                aria-expanded="false"
-                                                aria-controls="serviceDesc{{ service.id }}"
-                                            >
-                                                Подробнее
-                                            </button>
 
-                                            <a href="#feedback" class="btn btn-primary btn-sm">
-                                                Записаться
+
+                                            <a href="{% url 'services:service_detail' service.pk %}" class="btn btn-primary btn-sm">
+                                                Подробнее
                                             </a>
                                         </div>
                                     </div>
@@ -197,7 +188,7 @@
         </div>
 
         <div class="text-center mt-4">
-            <a href="#services" class="btn btn-outline-primary">
+            <a href="{% url 'services:services_list' %}" class="btn btn-outline-primary">
                 Смотреть все услуги
             </a>
         </div>

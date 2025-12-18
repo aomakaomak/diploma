@@ -2,6 +2,9 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 
+from users.models import CustomUser
+
+
 class MainPage(models.Model):
     header_1 = models.CharField(max_length=300, verbose_name="Заголовок на главной")
     header_2 = models.CharField(max_length=300, verbose_name="Подзаголовок на главной")
@@ -83,6 +86,15 @@ class Appointment(models.Model):
     )
 
     result = models.TextField(verbose_name="Результат", blank=True, null=True)
+
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="appointments_of_user",
+        verbose_name="Пациент",
+        null=True,
+        blank=True,
+    )
 
     def clean(self):
         super().clean()

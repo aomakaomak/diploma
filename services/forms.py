@@ -13,7 +13,7 @@ class ServiceForm(forms.ModelForm):
 class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
-        exclude = ("result",)
+        exclude = ("result", "owner", "user")
 
 
 class FeedbackForm(forms.Form):

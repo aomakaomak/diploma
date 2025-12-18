@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -127,16 +128,25 @@ class ContactsView(FormView):
         return super().form_valid(form)
 
 
-class AppointmentCreateView(CreateView):
+class AppointmentCreateView(LoginRequiredMixin, CreateView):
     model = Appointment
     form_class = AppointmentForm
     template_name = 'services/appointment_form.html'
-    success_url = reverse_lazy('services:home')
+    success_url = reverse_lazy('services:appointments_list')
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        form.instance.user = self.request.user
+
+        return super().form_valid(form)
 
 
-class AppointmentsListView(ListView):
+class AppointmentsListView(LoginRequiredMixin, ListView):
     model = Appointment
     template_name = "services/appointments.html"
     context_object_name = "appointments"
+
+    def get_queryset(self):
+        return Appointment.objects.filter(owner=self.request.user)
 
 

@@ -35,6 +35,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'services:appointments_list' %}">Мои записи</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'services:appointment_create' %}">Записаться</a>
+                </li>
                 <li class="p-2 btn btn-outline-primary">
                     <form method="POST" action="{% url 'users:logout' %}" style="display: inline">
                         {% csrf_token %}
