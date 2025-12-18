@@ -3,7 +3,6 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 
-
 class MainPage(models.Model):
     header_1 = models.CharField(max_length=300, verbose_name="Заголовок на главной")
     header_2 = models.CharField(max_length=300, verbose_name="Подзаголовок на главной")
@@ -21,41 +20,46 @@ class MainPage(models.Model):
         return "Главная страница"
 
     class Meta:
-        verbose_name = 'главная'
-        verbose_name_plural = 'главные'
-        ordering = ['header_1']
+        verbose_name = "главная"
+        verbose_name_plural = "главные"
+        ordering = ["header_1"]
 
 
 class Service(models.Model):
     title = models.CharField(max_length=150, verbose_name="Название услуги")
-    short_description = models.CharField(max_length=1000, verbose_name="Краткое описание")
+    short_description = models.CharField(
+        max_length=1000, verbose_name="Краткое описание"
+    )
     example = models.CharField(max_length=1000, verbose_name="Пример услуги")
     full_description = models.TextField(verbose_name="Полное описание")
     price = models.IntegerField(verbose_name="Цена")
-    image = models.ImageField(upload_to='images/', blank=True, null=True, verbose_name="Фото")
+    image = models.ImageField(
+        upload_to="images/", blank=True, null=True, verbose_name="Фото"
+    )
 
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = 'услуга'
-        verbose_name_plural = 'услуги'
-        ordering = ['title']
+        verbose_name = "услуга"
+        verbose_name_plural = "услуги"
+        ordering = ["title"]
 
 
 class Doctor(models.Model):
     name = models.CharField(max_length=150, verbose_name="ФИО")
     specialization = models.CharField(max_length=150, verbose_name="Специализация")
-    photo = models.ImageField(upload_to='images/', blank=True, null=True, verbose_name="Фото")
+    photo = models.ImageField(
+        upload_to="images/", blank=True, null=True, verbose_name="Фото"
+    )
 
     def __str__(self):
         return f"{self.name} -- {self.specialization}"
 
     class Meta:
-        verbose_name = 'врач'
-        verbose_name_plural = 'врачи'
-        ordering = ['name']
-
+        verbose_name = "врач"
+        verbose_name_plural = "врачи"
+        ordering = ["name"]
 
 
 class Appointment(models.Model):
@@ -97,8 +101,12 @@ class Appointment(models.Model):
 
     def clean(self):
         super().clean()
-        if (self.service is None and self.doctor is None) or (self.service is not None and self.doctor is not None):
-            raise ValidationError("Запись должна быть либо на услугу, либо к врачу (только один вариант).")
+        if (self.service is None and self.doctor is None) or (
+            self.service is not None and self.doctor is not None
+        ):
+            raise ValidationError(
+                "Запись должна быть либо на услугу, либо к врачу (только один вариант)."
+            )
 
     def __str__(self):
         if self.service_id:
@@ -110,4 +118,3 @@ class Appointment(models.Model):
     class Meta:
         verbose_name = "запись"
         verbose_name_plural = "записи"
-

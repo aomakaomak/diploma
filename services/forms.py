@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import Service, Appointment
+from .models import Appointment, Service
 
 
 class ServiceForm(forms.ModelForm):
@@ -20,21 +20,33 @@ class FeedbackForm(forms.Form):
     name = forms.CharField(
         label="Имя",
         max_length=150,
-        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Ваше имя"})
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Ваше имя"}
+        ),
     )
     phone = forms.CharField(
         label="Телефон",
         max_length=50,
         required=False,
-        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "+7 (___) ___-__-__"})
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "+7 (___) ___-__-__"}
+        ),
     )
     email = forms.EmailField(
         label="Email",
-        widget=forms.EmailInput(attrs={"class": "form-control", "placeholder": "name@example.com"})
+        widget=forms.EmailInput(
+            attrs={"class": "form-control", "placeholder": "name@example.com"}
+        ),
     )
     message = forms.CharField(
         label="Сообщение",
-        widget=forms.Textarea(attrs={"class": "form-control", "rows": 5, "placeholder": "Напишите, что вас интересует"})
+        widget=forms.Textarea(
+            attrs={
+                "class": "form-control",
+                "rows": 5,
+                "placeholder": "Напишите, что вас интересует",
+            }
+        ),
     )
 
     def clean_message(self):

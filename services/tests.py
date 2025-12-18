@@ -1,10 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-
-from services.models import MainPage, Service, Doctor, Appointment
-
 from django.urls import reverse
+
+from services.models import Appointment, Doctor, MainPage, Service
 
 
 class ModelCreationTests(TestCase):
@@ -110,10 +109,6 @@ class ModelCreationTests(TestCase):
             a.full_clean()
 
 
-
-
-
-
 class PagesReturn200Tests(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -175,4 +170,3 @@ class PagesReturn200Tests(TestCase):
             with self.subTest(url=url):
                 resp = self.client.get(url)
                 self.assertEqual(resp.status_code, 200)
-

@@ -4,11 +4,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView, FormView
+from django.views.generic import CreateView, DetailView, FormView, ListView
 from django.views.generic.edit import FormMixin
 
-from services.forms import ServiceForm, FeedbackForm, AppointmentForm
-from services.models import MainPage, Service, Doctor, Appointment
+from services.forms import AppointmentForm, FeedbackForm, ServiceForm
+from services.models import Appointment, Doctor, MainPage, Service
 
 
 class HomeView(FormMixin, ListView):
@@ -56,7 +56,10 @@ class HomeView(FormMixin, ListView):
                 context = self.get_context_data(form=form)
                 return self.render_to_response(context)
 
-            messages.success(request, "Спасибо! Сообщение отправлено. Мы свяжемся с вами в ближайшее время.")
+            messages.success(
+                request,
+                "Спасибо! Сообщение отправлено. Мы свяжемся с вами в ближайшее время.",
+            )
             return redirect(f"{self.get_success_url()}#feedback")
 
         context = self.get_context_data(form=form)
@@ -66,19 +69,19 @@ class HomeView(FormMixin, ListView):
 class ServiceCreateView(CreateView):
     model = Service
     form_class = ServiceForm
-    template_name = 'services/service_form.html'
-    success_url = reverse_lazy('services:home')
+    template_name = "services/service_form.html"
+    success_url = reverse_lazy("services:home")
 
     def form_valid(self, form):
         if self.request.FILES:
-            form.instance.image = self.request.FILES.get('image')
+            form.instance.image = self.request.FILES.get("image")
         return super().form_valid(form)
 
 
 class ServiceDetailView(DetailView):
     model = Service
-    template_name = 'services/service_detail.html'
-    context_object_name = 'service'
+    template_name = "services/service_detail.html"
+    context_object_name = "service"
 
 
 class DoctorListView(ListView):
@@ -124,15 +127,18 @@ class ContactsView(FormView):
             messages.error(self.request, f"Не удалось отправить письмо: {e}")
             return self.form_invalid(form)
 
-        messages.success(self.request, "Спасибо! Сообщение отправлено. Мы свяжемся с вами в ближайшее время.")
+        messages.success(
+            self.request,
+            "Спасибо! Сообщение отправлено. Мы свяжемся с вами в ближайшее время.",
+        )
         return super().form_valid(form)
 
 
 class AppointmentCreateView(LoginRequiredMixin, CreateView):
     model = Appointment
     form_class = AppointmentForm
-    template_name = 'services/appointment_form.html'
-    success_url = reverse_lazy('services:appointments_list')
+    template_name = "services/appointment_form.html"
+    success_url = reverse_lazy("services:appointments_list")
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
@@ -148,5 +154,3 @@ class AppointmentsListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Appointment.objects.filter(owner=self.request.user)
-
-

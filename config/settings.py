@@ -1,8 +1,7 @@
 import os
-from dotenv import load_dotenv
-
-
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
@@ -31,7 +30,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "users",
     "services",
 ]
@@ -134,6 +132,5 @@ DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
 
 AUTH_USER_MODEL = "users.CustomUser"
 
-LOGIN_REDIRECT_URL = 'services:home'
-LOGIN_URL = 'users:login'
-
+LOGIN_REDIRECT_URL = "services:home"
+LOGIN_URL = "users:login"
