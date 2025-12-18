@@ -132,3 +132,11 @@ class AppointmentCreateView(CreateView):
     form_class = AppointmentForm
     template_name = 'services/appointment_form.html'
     success_url = reverse_lazy('services:home')
+
+
+class AppointmentsListView(ListView):
+    model = Appointment
+    template_name = "services/appointments.html"
+    context_object_name = "appointments"
+
+

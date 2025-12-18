@@ -2,7 +2,7 @@ from django.urls import path
 
 
 from .views import HomeView, ServiceCreateView, ServiceDetailView, DoctorListView, ServicesListView, ContactsView, \
-    AppointmentCreateView
+    AppointmentCreateView, AppointmentsListView
 
 app_name = 'services'
 
@@ -14,6 +14,7 @@ urlpatterns = [
     path('services/', ServicesListView.as_view(), name='services_list'),
     path("contacts/", ContactsView.as_view(), name="contacts"),
     path('new-appointment/', AppointmentCreateView.as_view(), name='appointment_create'),
+    path('appointments/', AppointmentsListView.as_view(), name='appointments_list'),
 
 ]
 

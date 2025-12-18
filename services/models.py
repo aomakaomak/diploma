@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 
 class MainPage(models.Model):
@@ -52,11 +54,6 @@ class Doctor(models.Model):
         verbose_name_plural = 'врачи'
         ordering = ['name']
 
-
-from django.conf import settings
-from django.core.exceptions import ValidationError
-from django.db import models
-from django.db.models import Q
 
 
 class Appointment(models.Model):
