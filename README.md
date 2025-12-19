@@ -102,7 +102,7 @@
 Обязательные для запуска с Postgres:
 
 ```env
-SECRET_KEY=django-insecure-4x#4i^t2m%6xv9o!1yq4v!8b1z0z2x5l4n0h3m8g3x9f1s
+SECRET_KEY=
 DEBUG=True
 
 NAME=medical

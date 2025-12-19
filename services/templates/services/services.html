@@ -79,19 +79,9 @@
                                     </div>
 
                                     <div class="mt-auto pt-3 d-flex flex-wrap gap-2 justify-content-end">
-                                        <button
-                                            class="btn btn-outline-primary btn-sm"
-                                            type="button"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#serviceFull{{ service.id }}"
-                                            aria-expanded="false"
-                                            aria-controls="serviceFull{{ service.id }}"
-                                        >
-                                            Подробнее
-                                        </button>
 
-                                        <a href="#feedback" class="btn btn-primary btn-sm">
-                                            Записаться
+                                        <a href="{% url 'services:service_detail' service.pk %}" class="btn btn-primary btn-sm">
+                                            Подробнее
                                         </a>
                                     </div>
                                 </div>
