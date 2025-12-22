@@ -1,0 +1,118 @@
+{% extends 'services/base.html' %}
+
+{% block title %}Мои записи{% endblock %}
+
+{% block content %}
+
+<header class="py-5 bg-light border-bottom">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-2">Мои записи</h1>
+        <p class="lead mb-0 text-muted">
+            Здесь отображаются ваши записи на услуги или к врачу, а также результаты (если они добавлены).
+        </p>
+    </div>
+</header>
+
+<section class="py-5">
+    <div class="container">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} mb-3" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if appointments %}
+            <div class="row gy-4">
+                {% for appointment in appointments %}
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+
+                                <div class="d-flex flex-column flex-md-row justify-content-between gap-2">
+                                    <div>
+                                        <h2 class="h5 mb-1">
+                                            {% if appointment.service %}
+                                                Запись на услугу: {{ appointment.service.title }}
+                                            {% elif appointment.doctor %}
+                                                Запись к врачу: {{ appointment.doctor.name }}
+                                            {% else %}
+                                                Запись (не выбран врач/услуга)
+                                            {% endif %}
+                                        </h2>
+
+                                        <div class="text-muted">
+                                            {% if appointment.service %}
+                                                <span class="fw-semibold">Кратко:</span> {{ appointment.service.short_description }}
+                                            {% elif appointment.doctor %}
+                                                <span class="fw-semibold">Специализация:</span> {{ appointment.doctor.specialization }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="text-muted text-md-end">
+                                        <div><span class="fw-semibold">ID:</span> {{ appointment.id }}</div>
+                                        <div><span class="fw-semibold">Пользователь:</span> {{ appointment.user }}</div>
+                                    </div>
+                                </div>
+
+                                <hr class="my-3">
+
+                                <div class="row gy-3">
+                                    <div class="col-lg-6">
+                                        <div class="fw-semibold mb-1">Детали</div>
+
+                                        {% if appointment.service %}
+                                            <div class="text-muted mb-2">
+                                                <span class="fw-semibold">Пример:</span> {{ appointment.service.example }}
+                                            </div>
+                                            <div class="text-muted mb-2">
+                                                <span class="fw-semibold">Цена:</span> от {{ appointment.service.price }} ₽
+                                            </div>
+                                            <div class="text-muted">
+                                                <span class="fw-semibold">Описание:</span><br>
+                                                {{ appointment.service.full_description|linebreaksbr }}
+                                            </div>
+                                        {% elif appointment.doctor %}
+                                            <div class="text-muted">
+                                                Запись к специалисту.
+                                            </div>
+                                        {% else %}
+                                            <div class="text-muted">
+                                                У этой записи не выбран ни врач, ни услуга.
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="fw-semibold mb-1">Результат</div>
+
+                                        {% if appointment.result %}
+                                            <div class="alert alert-success mb-0">
+                                                {{ appointment.result|linebreaksbr }}
+                                            </div>
+                                        {% else %}
+                                            <div class="alert alert-secondary mb-0">
+                                                Результат пока не добавлен.
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-secondary text-center mb-0">
+                У вас пока нет записей.
+            </div>
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}

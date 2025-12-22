@@ -1,0 +1,326 @@
+{% extends 'services/base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+
+<!-- Hero / краткое описание компании -->
+<section class="py-5"
+         style="background-image: url('/static/images/hero-diagnostics.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="container">
+        <div class="p-4 p-lg-5 rounded-3 bg-white bg-opacity-75">
+            <div class="row align-items-center gy-4">
+                <div class="col-lg-6">
+                    <h1 class="display-5 fw-bold mb-3">
+                        {{ main_page.header_1 }}
+                    </h1>
+                    <p class="lead mb-4">
+                        {{ main_page.header_2 }}
+                    </p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="{% url 'services:services_list' %}" class="btn btn-primary btn-lg">
+                            {{ main_page.button_text_1 }}
+                        </a>
+                        <a href="{% url 'services:appointment_create' %}" class="btn btn-outline-primary btn-lg">
+                            {{ main_page.button_text_2 }}
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">Почему выбирают нас</h5>
+                            <ul class="mb-0">
+                                {% for line in main_page.benefits.splitlines %}
+                                    {% if line %}
+                                        <li>{{ line }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- О компании -->
+<section id="about" class="py-5">
+    <div class="container">
+        <div class="row gy-4">
+            <div class="col-lg-6">
+                <h2 class="h3 mb-3">О компании</h2>
+                <p>
+                    {{ main_page.about_company }}
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <h3 class="h5 mb-3">{{ main_page.short_about_us_header }}</h3>
+                <div class="row gy-3">
+                    <div class="col-sm-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="h6">Команда</h4>
+                                <p class="mb-0">
+                                    {{ main_page.short_about_us_1 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="h6">Оборудование</h4>
+                                <p class="mb-0">
+                                    {{ main_page.short_about_us_2 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="h6">Удобство</h4>
+                                <p class="mb-0">
+                                    {{ main_page.short_about_us_3 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="h6">Подход</h4>
+                                <p class="mb-0">
+                                    {{ main_page.short_about_us_4 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% load static %}
+
+<!-- Услуги -->
+<section id="services" class="py-5 bg-light">
+    <div class="container">
+        <div class="mb-4 text-center">
+            <h2 class="h3 mb-2">Наши услуги</h2>
+            <p class="text-muted mb-0">
+                Основные направления диагностики в нашем центре.
+            </p>
+        </div>
+
+        <div class="row gy-4">
+            {% for service in services %}
+                <div class="col-12">
+                    <div class="card">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <div class="ratio ratio-4x3 rounded-start overflow-hidden">
+                                    {% if service.image %}
+                                        <img
+                                            src="{{ service.image.url }}"
+                                            class="w-100 h-100"
+                                            style="object-fit: cover;"
+                                            alt="{{ service.title }}"
+                                        >
+                                    {% else %}
+                                        <img
+                                            src="{% static 'images/service-default.jpg' %}"
+                                            class="w-100 h-100"
+                                            style="object-fit: cover;"
+                                            alt="{{ service.title }}"
+                                        >
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="card-body d-flex flex-column h-100">
+                                    <h3 class="h5">{{ service.title }}</h3>
+
+                                    <p class="mb-2">
+                                        {{ service.short_description }}
+                                    </p>
+
+                                    <p class="text-muted mb-3">
+                                        Пример: {{ service.example }}
+                                    </p>
+
+                                    <div class="collapse" id="serviceDesc{{ service.id }}">
+                                        <div class="mb-3">
+                                            {{ service.full_description|linebreaksbr }}
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-auto d-flex align-items-center justify-content-between gap-3">
+                                        <span class="text-primary fw-semibold">от {{ service.price }} ₽</span>
+
+                                        <div class="d-flex gap-2">
+
+
+                                            <a href="{% url 'services:service_detail' service.pk %}" class="btn btn-primary btn-sm">
+                                                Подробнее
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-secondary mb-0 text-center">
+                        Услуги пока не добавлены.
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'services:services_list' %}" class="btn btn-outline-primary">
+                Смотреть все услуги
+            </a>
+        </div>
+    </div>
+</section>
+
+
+
+
+<!-- Контакты + карта + форма обратной связи -->
+<section id="contacts" class="py-5">
+    <div class="container">
+        <div class="row gy-5">
+            <div class="col-lg-5">
+                <h2 class="h3 mb-3">Контакты</h2>
+                <p>
+                    Вы можете записаться на приём по телефону, через форму обратной связи
+                    или в личном кабинете на сайте.
+                </p>
+
+                <div class="mb-3">
+                    <h3 class="h6 mb-1">Адрес</h3>
+                    <p class="mb-0">
+                        г. Москва, ул. Примерная, д. 10
+                    </p>
+                </div>
+
+                <div class="mb-3">
+                    <h3 class="h6 mb-1">Телефон</h3>
+                    <p class="mb-0">
+                        <a href="tel:+74950000000">+7 (495) 000-00-00</a>
+                    </p>
+                </div>
+
+                <div class="mb-3">
+                    <h3 class="h6 mb-1">Email</h3>
+                    <p class="mb-0">
+                        <a href="mailto:info@diagnostik-plus.ru">info@diagnostik-plus.ru</a>
+                    </p>
+                </div>
+
+                <div class="mb-3">
+                    <h3 class="h6 mb-1">Режим работы</h3>
+                    <p class="mb-0">
+                        Пн–Вс: 8:00–21:00
+                    </p>
+                </div>
+
+                <!-- Карта проезда -->
+                <div class="mt-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="h6 mb-3">Карта проезда</h3>
+                            <div class="ratio ratio-16x9 rounded overflow-hidden">
+                                <iframe
+                                    src="https://yandex.ru/map-widget/v1/?ll=39.723062%2C43.585472&z=14"
+                                    frameborder="0"
+                                    allowfullscreen="true"
+                                    style="border:0;"
+                                ></iframe>
+                            </div>
+                            <div class="text-muted small mt-2">
+                                Если нужен точный адрес — возьми iframe в Яндекс.Картах: «Поделиться» → «Вставить на сайт».
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7" id="feedback">
+                <h2 class="h3 mb-3">Форма для обратной связи</h2>
+                <p class="mb-4">
+                    Оставьте контакты и кратко опишите вопрос — мы свяжемся с вами.
+                </p>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} mb-3" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="post" action="{% url 'services:home' %}">
+                    {% csrf_token %}
+
+                    {{ form.non_field_errors }}
+
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">{{ form.name.label }}</label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="text-danger small mt-1">{{ form.name.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">{{ form.phone.label }}</label>
+                            {{ form.phone }}
+                            {% if form.phone.errors %}
+                                <div class="text-danger small mt-1">{{ form.phone.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">{{ form.email.label }}</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">{{ form.message.label }}</label>
+                            {{ form.message }}
+                            {% if form.message.errors %}
+                                <div class="text-danger small mt-1">{{ form.message.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-12 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">
+                                Отправить
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

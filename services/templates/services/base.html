@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Сайт медицинской компании{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Локальный Bootstrap -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Навигация -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'services:home' %}">Медцентр «Диагностик+»</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false" aria-label="Переключить меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'services:about' %}">О компании</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'services:services_list' %}">Услуги</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'services:contacts' %}">Контакты</a>
+                </li>
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'services:appointments_list' %}">Мои записи</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'services:appointment_create' %}">Записаться</a>
+                </li>
+                <li class="p-2 btn btn-outline-primary">
+                    <form method="POST" action="{% url 'users:logout' %}" style="display: inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link nav-link">Выйти</button>
+                    </form>
+                </li>
+
+                {% else %}
+                <a class="p-2 btn btn-outline-primary" href="{% url 'users:login' %}">Войти</a>
+                <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Регистрация</a>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+{% block content %}{% endblock %}
+
+<!-- Подвал -->
+<footer class="py-4 bg-dark text-light">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+            <div>
+                &copy; {% now "Y" %} Медцентр «Диагностик+». Все права защищены.
+            </div>
+            <div class="text-muted">
+                Информация на сайте не заменяет консультацию врача.
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script type="text/javascript" src="/static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
